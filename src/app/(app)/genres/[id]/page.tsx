@@ -1,11 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export default async function GenrePage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default async function Page({ params }: { params: { id: string } }) {
   const genreId = params.id;
   const apiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 
