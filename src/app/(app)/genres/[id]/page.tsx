@@ -1,9 +1,10 @@
+// src/app/genres/[id]/page.tsx
 import Image from "next/image";
 import Link from "next/link";
 
-export default async function Page({ params }: { params: { id: string } }) {
-  const genreId = params.id;
-  const apiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY;
+export default async function Page(props: any) {
+  const genreId = props.params.id as string;
+  const apiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY!;
 
   const moviesRes = await fetch(
     `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${genreId}`
@@ -15,12 +16,12 @@ export default async function Page({ params }: { params: { id: string } }) {
   );
   const genreData = await genreRes.json();
 
-  const genre = genreData.genres.find((g: any) => g.id.toString() === genreId);
+  const genre = genreData.genres.find((g: any) => String(g.id) === genreId);
 
   return (
     <main className="px-6 py-12 text-white">
       <h1 className="text-3xl font-bold mb-6">
-        {genre ? genre.name : "Unknown Genre"}
+        {genre?.name || "Unknown Genre"}
       </h1>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
